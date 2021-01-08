@@ -66,8 +66,7 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
-
+Icon
 
 # Thumbnails
 ._*
@@ -91,3 +90,6 @@ Temporary Items
 # Unignore shaders
 !**/build/shaders/
 !**/build/shaders/**/*
+
+# CMake cache
+.cache/

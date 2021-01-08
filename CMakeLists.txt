@@ -16,19 +16,10 @@ project( vulkan-project )
 
 include_directories( ./include )
 
-if( APPLE )
-	include_directories( /usr/local/include )
-	link_directories( /usr/local/lib )
-endif()
-
 find_package( Threads REQUIRED )
+find_package( glfw3 CONFIG REQUIRED )
 find_package( Vulkan REQUIRED )
-
-if( WIN32 )
-	find_package( glm CONFIG REQUIRED )
-	find_package( glfw3 CONFIG REQUIRED )
-	find_package( Boost 1.73.0 REQUIRED )
-endif()
+find_package( Boost 1.73.0 REQUIRED )
 
 file( GLOB SOURCES "./src/*.cpp" "./src/**/*.cpp" )
 
@@ -50,7 +41,5 @@ if( UNIX AND NOT APPLE )
 	target_link_libraries( vulkan-game PRIVATE X11 Xxf86vm Xrandr Xi )
 endif()
 
-if( WIN32 )
-	target_link_libraries( vulkan-tests PRIVATE Boost::boost )
-endif()
+target_link_libraries( vulkan-tests PRIVATE Boost::boost )
 
