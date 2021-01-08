@@ -1,17 +1,25 @@
-cmake_minimum_required( VERSION 3.0 )
+cmake_minimum_required( VERSION 3.1 )
 
 set( CMAKE_BUILD_TYPE "Release" )
-
-if( UNIX )
-	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2" )
-elseif( WIN32 )
-	set( CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_TOOLCHAIN_FILE} )
-	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /O2" )
-endif()
-
+set( CMAKE_CXX_STANDARD 17 )
+set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
+if( UNIX )
+	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2" )
+elseif( WIN32 )
+	set( CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_TOOLCHAIN_FILE} )
+	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2" )
+endif()
+
 project( vulkan-project )
+
+include_directories( ./include )
+
+if( APPLE )
+	include_directories( /usr/local/include )
+	link_directories( /usr/local/lib )
+endif()
 
 find_package( Threads REQUIRED )
 
@@ -20,15 +28,6 @@ if( WIN32 )
 	find_package( glfw3 CONFIG REQUIRED )
 	find_package( Vulkan REQUIRED )
 	find_package( Boost 1.73.0 REQUIRED )
-	include_directories( $ENV{VULKAN_SDK}/Include )
-	link_directories( $ENV{VULKAN_SDK}/Lib )
-endif()
-
-include_directories( ./include )
-
-if( APPLE )
-	include_directories( /usr/local/include )
-	link_directories( /usr/local/lib )
 endif()
 
 file( GLOB SOURCES "./src/*.cpp" "./src/**/*.cpp" )
