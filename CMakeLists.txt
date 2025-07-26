@@ -1,15 +1,13 @@
-cmake_minimum_required( VERSION 3.1 )
+cmake_minimum_required( VERSION 3.20 )
 
 set( CMAKE_BUILD_TYPE "Release" )
 set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2" )
 
-if( UNIX )
-	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2" )
-elseif( WIN32 )
+if( WIN32 )
 	set( CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_TOOLCHAIN_FILE} )
-	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /O2" )
 endif()
 
 project( vulkan-project )
